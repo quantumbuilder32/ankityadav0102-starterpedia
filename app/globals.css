@@ -1,3 +1,46 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*,
+*::before,
+*::after {
+  /* border: 1px solid red !important; */
+}
+
+:root {
+  --mainColor: blue;
+  --tone20: hsl(0, 0%, 20%);
+  --tone95: hsl(0, 0%, 95%);
+  --smallFontSize: .7rem;
+  --largeFontSize: 1.5rem;
+  --extraLargeFontSize: 2rem;
+}
+
+html {
+  min-height: 100%;
+  display: grid;
+}
+
+body {
+  display: grid;
+  grid-template-rows: auto 1fr;
+}
+
+section {
+  padding: 2rem 1rem;
+}
+
+h1 {
+  font-size: var(--largeFontSize);
+  font-weight: bold;
+}
+
+input {
+  padding: 1rem;
+}
+
+svg {
+  width: 1rem;
+  aspect-ratio: 1/1;
+}
