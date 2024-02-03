@@ -17,6 +17,14 @@
   --extraLargeFontSize: 2.5rem;
 }
 
+@media only screen and (max-width: 600px) {
+  :root {
+    --smallFontSize: .7rem;
+    --largeFontSize: 1.5rem;
+    --extraLargeFontSize: 2rem;
+  }
+}
+
 html {
   min-height: 100%;
   display: grid;
@@ -43,4 +51,9 @@ input {
 svg {
   width: 1rem;
   aspect-ratio: 1/1;
+  transition: scale 600ms;
+}
+
+svg:hover {
+  scale: 1.1;
 }
