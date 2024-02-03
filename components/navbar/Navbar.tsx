@@ -9,7 +9,6 @@ export default function Navbar() {
     const [showingNav, showingNavSet] = useState(false)
     const [screenSize, screenSizeSet] = useAtom(screenSizeGlobal)
 
-    console.log(`$screenSize`, screenSize);
     return (
         <nav className={styles.mainNav}>
             <p style={{ fontWeight: "bold", fontSize: "var(--largeFontSize)" }}>Starterpedia</p>

@@ -1,3 +1,4 @@
+import ResourcesDisplay from "@/components/resourcesDisplay/ResourcesDisplay";
 import Image from "next/image";
 
 export default function Home() {
@@ -25,6 +26,10 @@ export default function Home() {
             <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)' }}>Example3</p>
           </div>
         </div>
+      </section>
+
+      <section>
+        <ResourcesDisplay />
       </section>
     </main>
   );
