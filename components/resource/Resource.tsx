@@ -21,12 +21,12 @@ export default function Resource({ resource }: { resource: ResourceType }) {
     return (
         <div style={{ position: "relative" }}>
             {dayDifferenceTime <= 1 && (
-                <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", position: "absolute", top: 0, right: 0, margin: "1rem" }}>new</div>
+                <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", position: "absolute", top: 0, right: 0, borderRadius: "2rem", color: "#fff", margin: ".5rem" }}>new</div>
             )}
 
-            <div style={{ padding: "1rem" }}>
-                <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", }} />
+            <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", }} />
 
+            <div style={{ padding: "1rem" }}>
                 <p>{resource.title}</p>
 
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>

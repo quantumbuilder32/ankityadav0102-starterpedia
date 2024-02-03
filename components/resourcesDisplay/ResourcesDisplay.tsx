@@ -46,7 +46,7 @@ export default function ResourcesDisplay() {
                 <div style={{ border: '1px solid var(--tone95)', padding: '.5rem 1rem', borderRadius: ".2rem" }}>Sort By</div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(250px,100%), 1fr))", justifyContent: "center", gap: "1rem" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(250px,100%), 1fr))", justifyContent: "center", gap: "1rem", maxWidth: "1200px", margin: "0 auto" }}>
                 {resources.map(eachResource => {
                     return (
                         <Resource key={eachResource.id} resource={eachResource} />
