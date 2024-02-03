@@ -6,7 +6,8 @@
     align-items: center;
     position: sticky;
     top: 0;
-    /* padding-block: 1rem; */
+    border-bottom: 2px solid var(--tone95);
+    padding-block: 1rem;
 }
 
 .mainMenu {
