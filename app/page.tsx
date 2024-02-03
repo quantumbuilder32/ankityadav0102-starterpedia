@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <main>
       <section style={{ height: "100%", maxHeight: "100vh", display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
-        <h1 style={{ fontSize: "var(--extraLargeFontSize)", maxWidth: "500px", textAlign: 'center' }}>Discover the world's top designers & creatives</h1>
+        <h1 style={{ fontSize: "var(--extraLargeFontSize)", maxWidth: "500px", textAlign: 'center' }}>Discover the world&apos;s top designers & creatives</h1>
 
         <p style={{ color: "var(--tone20)" }}>find talents and connect with creative people</p>
 
