@@ -7,25 +7,25 @@ const resources: ResourceType[] = [
         id: "askskskfjsine",
         category: "courses",
         dateCreated: new Date("2024-02-03"),
-        imageSrc: "https://images.pexels.com/photos/2152/sky-earth-space-working.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        imageSrc: "https://assets-global.website-files.com/63bc24277d11efd498c4b12c/659be985dc2cefbdf6a31ac2_groove-thumbnail.svg",
         sharedLink: "",
-        title: "The New Word"
+        title: "Groove"
     },
     {
         id: "smaskskdfuqjsmam",
         category: "courses",
         dateCreated: new Date("2024-02-01"),
-        imageSrc: "https://images.pexels.com/photos/2152/sky-earth-space-working.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        imageSrc: "https://assets-global.website-files.com/63bc24277d11efd498c4b12c/65ae3c5cf0c9b2284528d810_tella-thumbnail.png",
         sharedLink: "",
-        title: "The New Word 2"
+        title: "Tella"
     },
     {
         id: "asojdkamskxnaxmzma",
         category: "courses",
         dateCreated: new Date("2024-01-01"),
-        imageSrc: "https://images.pexels.com/photos/2152/sky-earth-space-working.jpg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
+        imageSrc: "https://assets-global.website-files.com/63bc24277d11efd498c4b12c/659be345c662712c303feda7_adobe-creative-cloud-thumbnail.png",
         sharedLink: "",
-        title: "The New Word 3"
+        title: "Adobe Creative Cloud"
     }
 ]
 
