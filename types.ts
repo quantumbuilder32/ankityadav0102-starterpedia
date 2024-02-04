@@ -2,7 +2,7 @@ import { z } from "zod";
 
 export const userSchema = z.object({
     id: z.number(),
-    name: z.string().min(1),
+    name: z.string().min(1).nullable(),
     userName: z.string().min(1),
     bio: z.string().min(1).nullable(),
     role: z.string().min(1).nullable(),
@@ -13,9 +13,7 @@ export type user = z.infer<typeof userSchema> & {
     resourcesPosted?: resource[],
     bookmarks?: resource[],
 }
-
-
-export type newUser = Omit<user, "id">
+export type newUser = Omit<user, "id" | "createdAt">
 
 
 
@@ -30,7 +28,7 @@ export const resourceSchema = z.object({
     link: z.string().min(1),
     description: z.string().min(1).nullable(),
     createdAt: z.date(),
-    approved: z.boolean().nullish(),
+    approved: z.boolean(),
 })
 
 export type resource = z.infer<typeof resourceSchema> & {
@@ -39,6 +37,7 @@ export type resource = z.infer<typeof resourceSchema> & {
     categories?: category[],
     usersThatBookmarked?: user[],
 }
+export type newResource = Omit<resource, "id" | "createdAt">
 
 
 

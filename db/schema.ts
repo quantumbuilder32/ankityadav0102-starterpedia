@@ -1,14 +1,25 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, integer, pgTable, primaryKey, serial, text, timestamp, uniqueIndex } from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, primaryKey, integer, serial, text, timestamp, } from "drizzle-orm/pg-core";
+import type { AdapterAccount } from '@auth/core/adapters'
+
 
 export const users = pgTable("users",
     {
-        id: integer("id").primaryKey(),
-        name: text("name").notNull(),
+        id: serial("id").primaryKey(),
+        name: text("name"),
         userName: text("user_name").notNull().unique(),
         bio: text("bio"),
         role: text("password"),
         createdAt: timestamp("created_at").defaultNow().notNull(),
+        email: text("email").notNull(),
+        emailVerified: timestamp("emailVerified", { mode: "date" }),
+        image: text("image"),
+
+        // id: text("id").notNull().primaryKey(),
+        // name: text("name"),
+        // email: text("email").notNull(),
+        // emailVerified: timestamp("emailVerified", { mode: "date" }),
+        // image: text("image"),
     },
     (table) => {
         return {
@@ -32,10 +43,61 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 
 
+
+
+
+
+export const accounts = pgTable("account",
+    {
+        userId: serial("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+        type: text("type").$type<AdapterAccount["type"]>().notNull(),
+        provider: text("provider").notNull(),
+        providerAccountId: text("providerAccountId").notNull(),
+        refresh_token: text("refresh_token"),
+        access_token: text("access_token"),
+        expires_at: integer("expires_at"),
+        token_type: text("token_type"),
+        scope: text("scope"),
+        id_token: text("id_token"),
+        session_state: text("session_state"),
+    },
+    (account) => ({
+        compoundKey: primaryKey({ columns: [account.provider, account.providerAccountId] }),
+    })
+)
+
+export const sessions = pgTable("session", {
+    sessionToken: text("sessionToken").notNull().primaryKey(),
+    userId: serial("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+    expires: timestamp("expires", { mode: "date" }).notNull(),
+})
+
+export const verificationTokens = pgTable("verificationToken",
+    {
+        identifier: text("identifier").notNull(),
+        token: text("token").notNull(),
+        expires: timestamp("expires", { mode: "date" }).notNull(),
+    },
+    (vt) => ({
+        compoundKey: primaryKey({ columns: [vt.identifier, vt.token] }),
+    })
+)
+
+
+
+
+
+
+
+
+
+
+
+
 export const resources = pgTable("resources",
     {
-        id: integer("id").primaryKey(),
-        authorId: integer("author_id").references(() => users.id),
+        id: serial("id").primaryKey(),
+        authorId: serial("author_id").references(() => users.id),
         name: text("name").notNull(),
         link: text("link").notNull(),
         description: text("description"),
@@ -125,8 +187,8 @@ export const tagsRelations = relations(tags, ({ many }) => ({
 //many to many junction tables
 
 export const usersToBookmarks = pgTable('users_to_bookmarks', {
-    userId: integer('user_id').notNull().references(() => users.id),
-    resourceId: integer('resource_id').notNull().references(() => resources.id),
+    userId: serial('user_id').notNull().references(() => users.id),
+    resourceId: serial('resource_id').notNull().references(() => resources.id),
 }, (t) => ({
     pk: primaryKey({ columns: [t.userId, t.resourceId] }),
 }),
@@ -157,7 +219,7 @@ export const usersToBookmarksRelations = relations(usersToBookmarks, ({ one }) =
 
 
 export const resourcesToTags = pgTable('resources_to_tags', {
-    resourceId: integer('resource_id').notNull().references(() => resources.id),
+    resourceId: serial('resource_id').notNull().references(() => resources.id),
     tagName: text('tag_name').notNull().references(() => tags.name),
 }, (t) => ({
     pk: primaryKey({ columns: [t.resourceId, t.tagName] }),
@@ -195,7 +257,7 @@ export const resourcesToTagsRelations = relations(resourcesToTags, ({ one }) => 
 
 
 export const resourcesToCategories = pgTable('resources_to_categories', {
-    resourceId: integer('resource_id').notNull().references(() => resources.id),
+    resourceId: serial('resource_id').notNull().references(() => resources.id),
     categoryName: text('category_name').notNull().references(() => categories.name),
 }, (t) => ({
     pk: primaryKey({ columns: [t.resourceId, t.categoryName] }),

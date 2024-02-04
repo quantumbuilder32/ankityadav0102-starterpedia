@@ -5,6 +5,7 @@ import { useState } from "react"
 import { useAtom } from "jotai"
 import { screenSizeGlobal } from "@/utility/ResizeChecker"
 import Logo from "../logo/Logo"
+import { signIn, signOut } from "next-auth/react"
 
 export default function Navbar() {
     const [showingNav, showingNavSet] = useState(false)
@@ -42,8 +43,8 @@ export default function Navbar() {
 
             <div style={{ display: !screenSize.desktop ? "none" : "" }} className={styles.rightNavCont}>
                 <Link href={""}><button>Submit ↪</button></Link>
-                <Link href={""}>Login</Link>
-                <Link href={""}>Sign Up</Link>
+                <Link href={""}><button onClick={() => signIn()}>Login</button></Link>
+                <Link href={""}><button onClick={() => signIn()}>Sign Up</button></Link>
             </div>
         </nav>
     )
