@@ -19,7 +19,7 @@ export default function Resource({ resource }: { resource: ResourceType }) {
     })
 
     return (
-        <div style={{ position: "relative" }}>
+        <div style={{ position: "relative", backgroundColor: "rgba(0,0,0,0.05)", borderRadius: "2rem" }}>
             {dayDifferenceTime <= 1 && (
                 <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", position: "absolute", top: 0, right: 0, borderRadius: "2rem", color: "#fff", margin: ".5rem" }}>new</div>
             )}
