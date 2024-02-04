@@ -13,26 +13,37 @@ export default function Navbar() {
         <nav className={styles.mainNav}>
             <p style={{ fontWeight: "bold", fontSize: "var(--largeFontSize)" }}>Starterpedia</p>
 
+            {!screenSize.desktop && (
+                <>
+                    <Link href={""}>Submit</Link>
+                </>
+            )}
+
             <div className={styles.barIcon} onClick={() => showingNavSet(prev => !prev)}>
                 <svg style={{ opacity: showingNav ? 1 : 0, rotate: showingNav ? "0deg" : "40deg", position: "absolute", top: "50%", left: "50%", translate: "-50% -50%", transition: "rotate 200ms", width: "1.3rem" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" /></svg>
 
                 <svg style={{ opacity: !showingNav ? 1 : 0, rotate: !showingNav ? "0deg" : "-40deg", position: "absolute", top: "50%", left: "50%", translate: "-50% -50%", transition: "rotate 200ms", }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z" /></svg>
             </div>
 
+
             <ul style={{ display: !screenSize.desktop && !showingNav ? "none" : "" }} className={styles.mainMenu}>
+                {showingNav && (
+                    <>
+                        <Link href={""}>Login</Link>
+                        <Link href={""}>Sign Up</Link>
+                    </>
+                )}
+
                 <li><Link href={""}>Leaderboard</Link></li>
                 <li><Link href={""}>Bookmarks</Link></li>
                 <li><Link href={""}>Advertise</Link></li>
                 <li><Link href={""}>About</Link></li>
             </ul>
 
-            <div className={styles.rightNavCont}>
-                <Link style={{ flex: 1 }} href={""}>Submit</Link>
-
-                <div style={{ display: "flex", flexWrap: 'wrap', gap: "1rem", justifyContent: "center" }}>
-                    <Link href={""}>Login</Link>
-                    <Link href={""}>Sign Up</Link>
-                </div>
+            <div style={{ display: !screenSize.desktop ? "none" : "" }} className={styles.rightNavCont}>
+                <Link href={""}>Submit</Link>
+                <Link href={""}>Login</Link>
+                <Link href={""}>Sign Up</Link>
             </div>
         </nav>
     )

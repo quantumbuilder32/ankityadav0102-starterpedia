@@ -1,3 +1,13 @@
 .categoryButton {
     padding: 1rem;
+    border-radius: 2rem;
+    border: 2px solid var(--tone95);
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+
+}
+
+.categoryButton>span {
+    font-size: var(--smallFontSize);
 }

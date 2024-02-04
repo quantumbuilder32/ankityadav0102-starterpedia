@@ -36,15 +36,15 @@ export default function ResourcesDisplay() {
                 <div style={{ border: '1px solid var(--tone95)', padding: '.5rem 1rem', borderRadius: ".2rem" }}>Filter</div>
 
                 <div className="noScrollBar" style={{ display: "flex", gap: "1rem", overflow: "auto" }}>
-                    <div className={styles.categoryButton}>Tools</div>
-                    <div className={styles.categoryButton}>Articles</div>
-                    <div className={styles.categoryButton}>Communities</div>
-                    <div className={styles.categoryButton}>Books</div>
-                    <div className={styles.categoryButton}>Courses</div>
+                    <div className={styles.categoryButton}>Tools <span>21</span></div>
+                    <div className={styles.categoryButton}>Articles <span>54</span></div>
+                    <div className={styles.categoryButton}>Communities <span>73</span></div>
+                    <div className={styles.categoryButton}>Books <span>81</span></div>
+                    <div className={styles.categoryButton}>Courses <span>20</span></div>
                 </div>
             </div>
 
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(250px,100%), 1fr))", justifyContent: "center", gap: "1rem", maxWidth: "1200px", margin: "0 auto" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", justifyContent: "center", gap: "1rem", maxWidth: "1000px", margin: "0 auto", padding: "1rem" }}>
                 {resources.map(eachResource => {
                     return (
                         <Resource key={eachResource.id} resource={eachResource} />
