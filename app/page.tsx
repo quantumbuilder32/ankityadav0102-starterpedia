@@ -17,7 +17,7 @@ export default function Home() {
           <input style={{ borderTopRightRadius: "1rem", borderBottomRightRadius: "1rem" }} type="text" placeholder="Filter by name" />
         </div>
 
-        <div style={{ display: 'flex', flexWrap: "wrap", gap: "1rem", alignItems: "center" }}>
+        {/* <div style={{ display: 'flex', flexWrap: "wrap", gap: "1rem", alignItems: "center", justifyContent: "center" }}>
           <p style={{ color: "var(--tone20)" }}>Trending searches</p>
 
           <div style={{ display: "flex", gap: "1rem", overflowX: "auto" }}>
@@ -25,7 +25,7 @@ export default function Home() {
             <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)', fontSize: "var(--smallFontSize)" }}>Example2</p>
             <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)', fontSize: "var(--smallFontSize)" }}>Example3</p>
           </div>
-        </div>
+        </div> */}
       </section>
 
       <section>
