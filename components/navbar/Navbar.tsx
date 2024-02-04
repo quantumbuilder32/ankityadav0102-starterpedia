@@ -20,7 +20,7 @@ export default function Navbar() {
             </div>
 
             <ul style={{ display: !screenSize.desktop && !showingNav ? "none" : "" }} className={styles.mainMenu}>
-                <li><Link href={""}>Leaderboards</Link></li>
+                <li><Link href={""}>Leaderboard</Link></li>
                 <li><Link href={""}>Bookmarks</Link></li>
                 <li><Link href={""}>Advertise</Link></li>
                 <li><Link href={""}>About</Link></li>
