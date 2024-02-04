@@ -32,10 +32,10 @@ const resources: ResourceType[] = [
 export default function ResourcesDisplay() {
     return (
         <div>
-            <div style={{ display: 'flex', justifyContent: "space-between", alignItems: "center", paddingInline: "1rem", maxWidth: "1200px", margin: "0 auto" }}>
+            <div style={{ display: 'grid', gridTemplateColumns: "auto auto auto", gap: "1rem", justifyContent: "space-between", alignItems: "center", paddingInline: "1rem", maxWidth: "1200px", margin: "0 auto" }}>
                 <div style={{ border: '1px solid var(--tone95)', padding: '.5rem 1rem', borderRadius: ".2rem" }}>Filter</div>
 
-                <div style={{ display: "flex", gap: "1rem", overflowX: "auto" }}>
+                <div style={{ display: "flex", gap: "1rem", overflow: "auto" }}>
                     <div className={styles.categoryButton}>Tools</div>
                     <div className={styles.categoryButton}>Articles</div>
                     <div className={styles.categoryButton}>Communities</div>

@@ -21,6 +21,7 @@
 .barIcon {
     cursor: pointer;
     display: none;
+    position: relative;
 }
 
 .mainMenu {
@@ -66,3 +67,6 @@
     }
 
 }
+
+
+@keyframes spin {}
