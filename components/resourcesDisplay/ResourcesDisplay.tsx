@@ -41,6 +41,10 @@ export default function ResourcesDisplay() {
                     <div className={styles.categoryButton}>Communities <span>73</span></div>
                     <div className={styles.categoryButton}>Books <span>81</span></div>
                     <div className={styles.categoryButton}>Courses <span>20</span></div>
+                    <div className={styles.categoryButton}>Newsletters <span>80</span></div>
+                    <div className={styles.categoryButton}>Videos <span>19</span></div>
+                    <div className={styles.categoryButton}>Podcasts <span>33</span></div>
+                    <div className={styles.categoryButton}>Threads <span>15</span></div>
                 </div>
             </div>
 

@@ -30,7 +30,7 @@ export default function Resource({ resource }: { resource: ResourceType }) {
                 <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", maxWidth: "50%", height: "auto", borderRadius: "2rem", boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)" }} />
             </div>
 
-            <div style={{ padding: "1rem" }}>
+            <div style={{ padding: "1.5rem" }}>
                 <p>{resource.title}</p>
 
                 <div style={{ display: "flex", justifyContent: 'space-between' }}>
