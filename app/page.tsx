@@ -1,7 +1,8 @@
 import ResourcesDisplay from "@/components/resourcesDisplay/ResourcesDisplay";
 import Image from "next/image";
 
-export default function Home() {
+export default async function Home() {
+
   return (
     <main>
       <section style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem" }}>
