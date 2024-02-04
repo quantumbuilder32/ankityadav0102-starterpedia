@@ -12,6 +12,7 @@
   --mainColor: blue;
   --tone20: hsl(0, 0%, 20%);
   --tone95: hsl(0, 0%, 95%);
+  --tone80: hsl(0, 0%, 80%);
   --smallFontSize: .7rem;
   --largeFontSize: 1.5rem;
   --extraLargeFontSize: 2.5rem;
@@ -46,6 +47,19 @@ h1 {
 
 input {
   padding: 1rem;
+}
+
+button {
+  padding: .5rem 1rem;
+  border: 1px solid var(--tone95);
+  box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.05);
+  transition: border 400ms;
+  border-radius: 1rem;
+  font-weight: bold;
+}
+
+button:hover {
+  border: 1px solid var(--tone80);
 }
 
 svg {

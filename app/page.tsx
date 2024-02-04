@@ -21,9 +21,9 @@ export default function Home() {
           <p style={{ color: "var(--tone20)" }}>Trending searches</p>
 
           <div style={{ display: "flex", gap: "1rem", overflowX: "auto" }}>
-            <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)' }}>Example</p>
-            <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)' }}>Example2</p>
-            <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)' }}>Example3</p>
+            <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)', fontSize: "var(--smallFontSize)" }}>Example</p>
+            <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)', fontSize: "var(--smallFontSize)" }}>Example2</p>
+            <p style={{ padding: '.2rem 1rem', borderRadius: ".5rem", backgroundColor: 'var(--tone95)', fontSize: "var(--smallFontSize)" }}>Example3</p>
           </div>
         </div>
       </section>

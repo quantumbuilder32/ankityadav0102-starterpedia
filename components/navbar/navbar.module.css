@@ -21,6 +21,8 @@
     cursor: pointer;
     display: none;
     position: relative;
+    width: 1rem;
+    aspect-ratio: 1/1;
 }
 
 .mainMenu {
@@ -58,9 +60,11 @@
     .mainMenu {
         display: grid;
         position: absolute;
+        align-content: flex-start;
         width: 100%;
         left: 0;
         top: 100%;
+        height: 90vh;
         background-color: #fff;
         padding: 1rem;
     }

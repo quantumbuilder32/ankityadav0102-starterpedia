@@ -1,5 +1,5 @@
 .categoryButton {
-    padding: 1rem;
+    padding: .5rem 1rem;
     border-radius: 2rem;
     border: 2px solid var(--tone95);
     display: flex;

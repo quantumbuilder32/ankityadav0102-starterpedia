@@ -15,7 +15,7 @@ export default function Navbar() {
 
             {!screenSize.desktop && (
                 <>
-                    <Link href={""}>Submit</Link>
+                    <Link href={""}><button>Submit ↪</button></Link>
                 </>
             )}
 
@@ -27,21 +27,21 @@ export default function Navbar() {
 
 
             <ul style={{ display: !screenSize.desktop && !showingNav ? "none" : "" }} className={styles.mainMenu}>
-                {showingNav && (
-                    <>
-                        <Link href={""}>Login</Link>
-                        <Link href={""}>Sign Up</Link>
-                    </>
-                )}
-
                 <li><Link href={""}>Leaderboard</Link></li>
                 <li><Link href={""}>Bookmarks</Link></li>
                 <li><Link href={""}>Advertise</Link></li>
                 <li><Link href={""}>About</Link></li>
+
+                {showingNav && (
+                    <>
+                        <Link style={{ margin: "0 auto" }} href={""}><button style={{ width: "90vw", maxWidth: "400px", borderRadius: ".2rem" }}>Login</button></Link>
+                        <Link style={{ margin: "0 auto" }} href={""}><button style={{ width: "90vw", maxWidth: "400px", borderRadius: ".2rem" }}>Sign Up</button></Link>
+                    </>
+                )}
             </ul>
 
             <div style={{ display: !screenSize.desktop ? "none" : "" }} className={styles.rightNavCont}>
-                <Link href={""}>Submit</Link>
+                <Link href={""}><button>Submit ↪</button></Link>
                 <Link href={""}>Login</Link>
                 <Link href={""}>Sign Up</Link>
             </div>
