@@ -25,7 +25,7 @@ export default function Resource({ resource }: { resource: ResourceType }) {
             )}
 
             <div style={{ width: "100%", aspectRatio: '1/1', display: "grid", alignItems: "center", justifyItems: "center" }}>
-                <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", maxWidth: "200px", height: "auto" }} />
+                <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", maxWidth: "50%", height: "auto", borderRadius: "2rem" }} />
             </div>
 
             <div style={{ padding: "1rem" }}>
