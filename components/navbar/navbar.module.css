@@ -59,8 +59,8 @@
         display: grid;
         position: absolute;
         width: 100%;
-        top: 100%;
         left: 0;
+        top: 4rem;
         background-color: #fff;
         padding: 1rem;
     }
