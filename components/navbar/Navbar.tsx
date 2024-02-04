@@ -4,6 +4,7 @@ import styles from "./navbar.module.css"
 import { useState } from "react"
 import { useAtom } from "jotai"
 import { screenSizeGlobal } from "@/utility/ResizeChecker"
+import Logo from "../logo/Logo"
 
 export default function Navbar() {
     const [showingNav, showingNavSet] = useState(false)
@@ -11,8 +12,7 @@ export default function Navbar() {
 
     return (
         <nav className={styles.mainNav}>
-            <p style={{ fontWeight: "bold", fontSize: "var(--largeFontSize)" }}>Starterpedia</p>
-
+            <Logo />
             {!screenSize.desktop && (
                 <>
                     <Link href={""}><button>Submit ↪</button></Link>

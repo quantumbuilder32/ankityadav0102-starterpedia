@@ -3,6 +3,7 @@ import { Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/navbar/Navbar";
 import ResizeChecker from "@/utility/ResizeChecker";
+import Footer from "@/components/footer/Footer";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -22,6 +23,7 @@ export default function RootLayout({
         <ResizeChecker />
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

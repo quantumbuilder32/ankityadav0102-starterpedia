@@ -1,0 +1,10 @@
+.mainMenu {
+    display: flex;
+    flex-direction: column;
+    color: var(--tone80);
+}
+
+.mainMenu>p:first-of-type {
+    color: #fff;
+    font-weight: bold;
+}

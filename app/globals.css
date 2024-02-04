@@ -10,6 +10,7 @@
 
 :root {
   --mainColor: blue;
+  --secondaryColor: purple;
   --tone20: hsl(0, 0%, 20%);
   --tone95: hsl(0, 0%, 95%);
   --tone80: hsl(0, 0%, 80%);
@@ -45,8 +46,13 @@ h1 {
   font-weight: bold;
 }
 
+h3 {
+  font-weight: bold;
+}
+
 input {
   padding: 1rem;
+  color: #000;
 }
 
 button {
