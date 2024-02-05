@@ -15,6 +15,6 @@ export async function addResource(seenResource: newResource) {
         userId: session.user.id,
     }
 
-    resourceSchema.parse(finalResource)
+    resourceSchema.omit({ id: true, createdAt: true }).parse(finalResource)
     await db.insert(resources).values(finalResource);
 }
