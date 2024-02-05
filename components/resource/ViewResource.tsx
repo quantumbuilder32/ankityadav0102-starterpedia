@@ -1,8 +1,6 @@
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
 
-
-
 export type ResourceType = {
     id: string,
     imageSrc: string,
@@ -12,10 +10,11 @@ export type ResourceType = {
     dateCreated: Date
 }
 
-const todaysDate = new Date();
 
-export default function ViewResource({ resource }: { resource: ResourceType }) {
+export default function ViewResource({ resource, fullScreen = false }: { resource: ResourceType, fullScreen?: boolean }) {
     const [dayDifferenceTime,] = useState(() => {
+        const todaysDate = new Date();
+
         const timeDifference = todaysDate.getTime() - resource.dateCreated.getTime()
         return timeDifference / (1000 * 3600 * 24)
     })
