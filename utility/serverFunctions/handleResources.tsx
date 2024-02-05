@@ -4,7 +4,7 @@ import { db } from "@/db/db";
 import { resources } from "@/db/schema";
 import { authOptions } from "@/lib/auth"
 import { newResource, resource, resourceSchema } from "@/types"
-import { eq } from "drizzle-orm";
+import { eq, ilike } from "drizzle-orm";
 import { getServerSession } from "next-auth"
 
 export async function addResource(seenResource: newResource) {
@@ -46,4 +46,12 @@ export async function updateResource(seenResource: resource) {
         })
         .where(eq(resources.id, newResource.id))
         .returning();
+}
+
+export async function searchForResource(resourceName: string): Promise<resource[]> {
+    const seenResources = await db.query.resources.findMany({
+        where: ilike(resources.name, `%${resourceName.toLowerCase()}%`),
+    });
+
+    return seenResources
 }

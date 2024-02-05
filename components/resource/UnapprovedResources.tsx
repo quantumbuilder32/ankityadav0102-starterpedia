@@ -16,7 +16,7 @@ export default function UnapprovedResources({ initialResources }: { initialResou
     })
 
     return (
-        <div>
+        <div style={{ display: "grid" }}>
             {isPending && (
                 <p>Loading resources...</p>
             )}
@@ -24,9 +24,12 @@ export default function UnapprovedResources({ initialResources }: { initialResou
             {error && (
                 <p>Error Loading resources {error.message}</p>
             )}
+            <div style={{ padding: "1rem" }}>
+                <h1>Resources to approve</h1>
+            </div>
 
             {resurcesData && (
-                <div style={{ display: "grid", gridAutoFlow: "column", gridAutoColumns: "min(80%, 400px)", gap: "1rem", overflow: "auto", padding: "1rem" }}>
+                <div style={{ display: "grid", gridAutoFlow: "column", gridAutoColumns: "min(80%, 400px)", gap: "1rem", overflow: "auto", padding: "1rem", }}>
                     {resurcesData.map(eachResource => {
                         return (
                             <EditResource key={eachResource.id} resource={eachResource} />

@@ -6,6 +6,8 @@ import { getAllUnapprovedResources } from '@/utility/serverFunctions/handleResou
 import EditResource from '@/components/resource/EditResource'
 import UnapprovedResources from '@/components/resource/UnapprovedResources'
 import { resource } from '@/types'
+import ResourceSearch from '@/components/resource/ResourceSearch'
+import ViewSearch from './ViewSearch'
 
 const tempresources: resource[] = JSON.parse(`[
     {
@@ -49,7 +51,7 @@ export default async function Page() {
     const resources = await getAllUnapprovedResources()
 
     return (
-        <main>
+        <main style={{}}>
             <div style={{ padding: "1rem" }}>
                 {session.user.name && (
                     <h2>Welcome Admin <span style={{ fontWeight: "bold" }}>- {session.user.name}</span></h2>
@@ -57,6 +59,8 @@ export default async function Page() {
             </div>
 
             <UnapprovedResources initialResources={resources} />
+
+            <ViewSearch />
         </main>
     )
 }
