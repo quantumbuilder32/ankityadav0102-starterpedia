@@ -14,6 +14,7 @@
   --tone20: hsl(0, 0%, 20%);
   --tone95: hsl(0, 0%, 95%);
   --tone80: hsl(0, 0%, 80%);
+  --reallySmallFontSize: .3rem;
   --smallFontSize: .7rem;
   --mediumFontSize: 1.2rem;
   --largeFontSize: 1.5rem;

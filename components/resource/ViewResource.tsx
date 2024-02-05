@@ -1,7 +1,10 @@
 "use client"
 import { resource } from '@/types';
+import { getAllResourceCategories } from '@/utility/serverFunctions/handleCategories';
+import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image'
 import React, { useRef, useState } from 'react'
+import CategoryDisplay from '../categories/CategoryDisplay';
 
 export default function ViewResource({ resource, fullScreen = false }: { resource: resource, fullScreen?: boolean }) {
     const [dayDifferenceTime,] = useState(() => {
@@ -11,10 +14,18 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
         return timeDifference / (1000 * 3600 * 24)
     })
 
+    const { data: resourceCategoriesData, isLoading: resourceCategoriesIsLoading } = useQuery({
+        queryKey: ['categories', resource.id],
+        queryFn: async () => await getAllResourceCategories({ id: resource.id }),
+        refetchOnWindowFocus: false,
+        enabled: true
+    })
+
+
     return (
         <div style={{ position: "relative", backgroundColor: "rgba(0,0,0,0.05)", borderRadius: "2rem" }}>
             {dayDifferenceTime <= 1 && (
-                <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", position: "absolute", top: 0, right: 0, borderRadius: "2rem", color: "#fff", margin: ".5rem" }}>new</div>
+                <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", position: "absolute", top: 0, right: 0, borderRadius: "2rem", color: "#fff", margin: "1rem" }}>new</div>
             )}
 
             <div style={{ width: "100%", aspectRatio: '1/1', display: "grid", alignItems: "center", justifyItems: "center" }}>
@@ -24,8 +35,14 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
             <div style={{ padding: "1.5rem" }}>
                 <p>{resource.name}</p>
 
-                <div style={{ display: "flex", justifyContent: 'space-between' }}>
-                    {/* <p>{resource.category}</p> */}
+                <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignContent: "flex-start" }}>
+                    <div style={{ display: "flex", gap: ".5rem", fontSize: "var(--smallFontSize)", }}>
+                        {resourceCategoriesData?.map(eachCategory => {
+                            return (
+                                <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ filter: "brightness(.8)", transformOrigin: "center left", borderRadius: ".7rem" }} />
+                            )
+                        })}
+                    </div>
 
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" /></svg>
                 </div>
