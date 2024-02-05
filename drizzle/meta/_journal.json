@@ -8,6 +8,13 @@
       "when": 1707118596303,
       "tag": "0000_opposite_freak",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1707147747562,
+      "tag": "0001_mature_silvermane",
+      "breakpoints": true
     }
   ]
 }

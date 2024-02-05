@@ -54,6 +54,7 @@ export type newResource = Omit<resource, "id" | "createdAt">
 
 export const categorySchema = z.object({
     name: z.string().min(1),
+    amountOfResources: z.number()
 })
 
 export type category = z.infer<typeof categorySchema> & {

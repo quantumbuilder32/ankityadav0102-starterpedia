@@ -122,6 +122,7 @@ export const resourcesRelations = relations(resources, ({ one, many }) => ({
 export const categories = pgTable("categories",
     {
         name: text("name").primaryKey().notNull(),
+        amountOfResources: integer("amount_of_resources").notNull().default(0),
     },
     (table) => {
         return {

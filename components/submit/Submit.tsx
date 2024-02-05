@@ -9,9 +9,9 @@ import { redirect, useRouter } from "next/navigation";
 const initialResourceObj: newResource = {
     name: "",
     link: "",
-    description: "",
     userId: "",
     approved: false,
+    description: null,
 }
 
 export default function Submit({ session }: { session: Session | null }) {
@@ -21,6 +21,7 @@ export default function Submit({ session }: { session: Session | null }) {
 
     const handleSubmit = async () => {
         try {
+            console.log(`$sending`, resourceObj);
             await addResource(resourceObj)
 
             toast.success("sent for approval!")

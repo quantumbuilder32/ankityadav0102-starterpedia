@@ -1,7 +1,10 @@
+import CategoriesDisplay from "@/components/categories/CategoriesDisplay";
 import ResourcesDisplay from "@/components/resourcesDisplay/ResourcesDisplay";
-
+import { getAllApprovedResources } from "@/utility/serverFunctions/handleResources";
 
 export default async function Page() {
+
+  const resources = await getAllApprovedResources()
 
   return (
     <main>
@@ -30,7 +33,9 @@ export default async function Page() {
       </section>
 
       <section>
-        <ResourcesDisplay />
+        <CategoriesDisplay />
+
+        <ResourcesDisplay resources={resources} />
       </section>
     </main>
   );

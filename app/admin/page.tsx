@@ -6,8 +6,7 @@ import { getAllUnapprovedResources } from '@/utility/serverFunctions/handleResou
 import EditResource from '@/components/resource/EditResource'
 import UnapprovedResources from '@/components/resource/UnapprovedResources'
 import { resource } from '@/types'
-import ResourceSearch from '@/components/resource/ResourceSearch'
-import ViewSearch from './ViewSearch'
+import ResourceSearch from '../../components/resource/ResourceSearch'
 
 const tempresources: resource[] = JSON.parse(`[
     {
@@ -60,7 +59,7 @@ export default async function Page() {
 
             <UnapprovedResources initialResources={resources} />
 
-            <ViewSearch />
+            <ResourceSearch />
         </main>
     )
 }

@@ -1,7 +1,7 @@
 "use server"
 
 import { db } from "@/db/db";
-import { resources } from "@/db/schema";
+import { categories, resources } from "@/db/schema";
 import { authOptions } from "@/lib/auth"
 import { newResource, resource, resourceSchema } from "@/types"
 import { eq, ilike } from "drizzle-orm";
@@ -18,6 +18,16 @@ export async function addResource(seenResource: newResource) {
 
     resourceSchema.omit({ id: true, createdAt: true }).parse(finalResource)
     await db.insert(resources).values(finalResource);
+}
+
+export async function getAllApprovedResources(seenLimit = 50, seenOffset = 0): Promise<resource[]> {
+    const results = await db.query.resources.findMany({
+        limit: seenLimit,
+        offset: seenOffset,
+        where: eq(resources.approved, true),
+    });
+
+    return results
 }
 
 
@@ -54,4 +64,12 @@ export async function searchForResource(resourceName: string): Promise<resource[
     });
 
     return seenResources
+}
+
+
+export async function deleteResource(seenResource: resource) {
+    const session = await getServerSession(authOptions)
+    if (!session || (session.user.id !== seenResource.userId && session.user.role !== "Admin")) throw new Error("no authority to delete this")
+
+    await db.delete(resources).where(eq(resources.id, seenResource.id));
 }
