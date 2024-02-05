@@ -1,8 +1,12 @@
 import { z } from "zod";
 
+
 export const userSchema = z.object({
-    id: z.number(),
+    id: z.string().min(1),
     name: z.string().min(1).nullable(),
+    email: z.string().min(1),
+    emailVerified: z.date().nullable(),
+    image: z.string().min(1),
     userName: z.string().min(1),
     bio: z.string().min(1).nullable(),
     role: z.string().min(1).nullable(),
@@ -23,7 +27,7 @@ export type newUser = Omit<user, "id" | "createdAt">
 
 export const resourceSchema = z.object({
     id: z.number(),
-    authorId: z.number(),
+    userId: z.string().min(1),
     name: z.string().min(1),
     link: z.string().min(1),
     description: z.string().min(1).nullable(),

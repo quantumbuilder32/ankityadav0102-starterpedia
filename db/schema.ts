@@ -3,30 +3,25 @@ import { boolean, index, pgTable, primaryKey, integer, serial, text, timestamp, 
 import type { AdapterAccount } from '@auth/core/adapters'
 
 
-export const users = pgTable("users",
-    {
-        id: serial("id").primaryKey(),
-        name: text("name"),
-        userName: text("user_name").notNull().unique(),
-        bio: text("bio"),
-        role: text("password"),
-        createdAt: timestamp("created_at").defaultNow().notNull(),
-        email: text("email").notNull(),
-        emailVerified: timestamp("emailVerified", { mode: "date" }),
-        image: text("image"),
 
-        // id: text("id").notNull().primaryKey(),
-        // name: text("name"),
-        // email: text("email").notNull(),
-        // emailVerified: timestamp("emailVerified", { mode: "date" }),
-        // image: text("image"),
-    },
+
+export const users = pgTable("user", {
+    id: text("id").notNull().primaryKey(),
+    name: text("name"),
+    email: text("email").notNull(),
+    emailVerified: timestamp("emailVerified", { mode: "date" }),
+    image: text("image"),
+
+    // userName: text("user_name").notNull().unique(),
+    // bio: text("bio"),
+    // role: text("password"),
+    // createdAt: timestamp("created_at").defaultNow().notNull(),
+},
     (table) => {
         return {
-            usernameIndex: index("username_index").on(table.userName),
+            // usernameIndex: index("username_index").on(table.userName),
         };
-    }
-);
+    })
 
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -44,12 +39,9 @@ export const usersRelations = relations(users, ({ many }) => ({
 
 
 
-
-
-
 export const accounts = pgTable("account",
     {
-        userId: serial("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+        userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
         type: text("type").$type<AdapterAccount["type"]>().notNull(),
         provider: text("provider").notNull(),
         providerAccountId: text("providerAccountId").notNull(),
@@ -68,11 +60,14 @@ export const accounts = pgTable("account",
 
 export const sessions = pgTable("session", {
     sessionToken: text("sessionToken").notNull().primaryKey(),
-    userId: serial("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
+    userId: text("userId")
+        .notNull()
+        .references(() => users.id, { onDelete: "cascade" }),
     expires: timestamp("expires", { mode: "date" }).notNull(),
 })
 
-export const verificationTokens = pgTable("verificationToken",
+export const verificationTokens = pgTable(
+    "verificationToken",
     {
         identifier: text("identifier").notNull(),
         token: text("token").notNull(),
@@ -92,12 +87,10 @@ export const verificationTokens = pgTable("verificationToken",
 
 
 
-
-
 export const resources = pgTable("resources",
     {
         id: serial("id").primaryKey(),
-        authorId: serial("author_id").references(() => users.id),
+        userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
         name: text("name").notNull(),
         link: text("link").notNull(),
         description: text("description"),
@@ -113,7 +106,7 @@ export const resources = pgTable("resources",
 
 export const resourcesRelations = relations(resources, ({ one, many }) => ({
     author: one(users, {
-        fields: [resources.authorId],
+        fields: [resources.userId],
         references: [users.id],
     }),
     tags: many(resourcesToTags),
@@ -187,7 +180,7 @@ export const tagsRelations = relations(tags, ({ many }) => ({
 //many to many junction tables
 
 export const usersToBookmarks = pgTable('users_to_bookmarks', {
-    userId: serial('user_id').notNull().references(() => users.id),
+    userId: text("userId").notNull().references(() => users.id, { onDelete: "cascade" }),
     resourceId: serial('resource_id').notNull().references(() => resources.id),
 }, (t) => ({
     pk: primaryKey({ columns: [t.userId, t.resourceId] }),

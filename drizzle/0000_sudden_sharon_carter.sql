@@ -1,10 +1,25 @@
+CREATE TABLE IF NOT EXISTS "account" (
+	"userId" text NOT NULL,
+	"type" text NOT NULL,
+	"provider" text NOT NULL,
+	"providerAccountId" text NOT NULL,
+	"refresh_token" text,
+	"access_token" text,
+	"expires_at" integer,
+	"token_type" text,
+	"scope" text,
+	"id_token" text,
+	"session_state" text,
+	CONSTRAINT "account_provider_providerAccountId_pk" PRIMARY KEY("provider","providerAccountId")
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "categories" (
 	"name" text PRIMARY KEY NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "resources" (
 	"id" serial PRIMARY KEY NOT NULL,
-	"author_id" serial NOT NULL,
+	"userId" text NOT NULL,
 	"name" text NOT NULL,
 	"link" text NOT NULL,
 	"description" text,
@@ -24,13 +39,22 @@ CREATE TABLE IF NOT EXISTS "resources_to_tags" (
 	CONSTRAINT "resources_to_tags_resource_id_tag_name_pk" PRIMARY KEY("resource_id","tag_name")
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "session" (
+	"sessionToken" text PRIMARY KEY NOT NULL,
+	"userId" text NOT NULL,
+	"expires" timestamp NOT NULL
+);
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "tags" (
 	"name" text PRIMARY KEY NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users" (
-	"id" serial PRIMARY KEY NOT NULL,
-	"name" text NOT NULL,
+	"id" text PRIMARY KEY NOT NULL,
+	"name" text,
+	"email" text NOT NULL,
+	"emailVerified" timestamp,
+	"image" text,
 	"user_name" text NOT NULL,
 	"bio" text,
 	"password" text,
@@ -39,9 +63,16 @@ CREATE TABLE IF NOT EXISTS "users" (
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users_to_bookmarks" (
-	"user_id" serial NOT NULL,
+	"userId" text NOT NULL,
 	"resource_id" serial NOT NULL,
-	CONSTRAINT "users_to_bookmarks_user_id_resource_id_pk" PRIMARY KEY("user_id","resource_id")
+	CONSTRAINT "users_to_bookmarks_userId_resource_id_pk" PRIMARY KEY("userId","resource_id")
+);
+--> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "verificationToken" (
+	"identifier" text NOT NULL,
+	"token" text NOT NULL,
+	"expires" timestamp NOT NULL,
+	CONSTRAINT "verificationToken_identifier_token_pk" PRIMARY KEY("identifier","token")
 );
 --> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "resource_index_two" ON "resources_to_categories" ("resource_id");--> statement-breakpoint
@@ -50,7 +81,13 @@ CREATE INDEX IF NOT EXISTS "resource_index" ON "resources_to_tags" ("resource_id
 CREATE INDEX IF NOT EXISTS "tag_index" ON "resources_to_tags" ("tag_name");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "username_index" ON "users" ("user_name");--> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "resources" ADD CONSTRAINT "resources_author_id_users_id_fk" FOREIGN KEY ("author_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "account" ADD CONSTRAINT "account_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "resources" ADD CONSTRAINT "resources_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -80,7 +117,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "users_to_bookmarks" ADD CONSTRAINT "users_to_bookmarks_user_id_users_id_fk" FOREIGN KEY ("user_id") REFERENCES "users"("id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "session" ADD CONSTRAINT "session_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
+DO $$ BEGIN
+ ALTER TABLE "users_to_bookmarks" ADD CONSTRAINT "users_to_bookmarks_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
