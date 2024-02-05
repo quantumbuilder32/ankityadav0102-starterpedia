@@ -6,8 +6,10 @@ import { useAtom } from "jotai"
 import { screenSizeGlobal } from "@/utility/ResizeChecker"
 import Logo from "../logo/Logo"
 import { signIn, signOut } from "next-auth/react"
+import type { Session } from "next-auth"
+import Image from "next/image";
 
-export default function Navbar() {
+export default function Navbar({ session }: { session?: Session | null }) {
     const [showingNav, showingNavSet] = useState(false)
     const [screenSize, screenSizeSet] = useAtom(screenSizeGlobal)
 
@@ -35,17 +37,36 @@ export default function Navbar() {
 
                 {showingNav && (
                     <>
-                        <Link style={{ margin: "0 auto" }} href={""}><button style={{ width: "90vw", maxWidth: "400px", borderRadius: ".2rem" }}>Login</button></Link>
-                        <Link style={{ margin: "0 auto" }} href={""}><button style={{ width: "90vw", maxWidth: "400px", borderRadius: ".2rem" }}>Sign Up</button></Link>
+                        <SignInButtons linkStyles={{ margin: "0 auto" }} buttonStyles={{ width: "90vw", maxWidth: "400px", borderRadius: ".2rem" }} session={session} />
                     </>
                 )}
             </ul>
 
             <div style={{ display: !screenSize.desktop ? "none" : "" }} className={styles.rightNavCont}>
                 <Link href={""}><button>Submit ↪</button></Link>
-                <Link href={""}><button onClick={() => signIn()}>Login</button></Link>
-                <Link href={""}><button onClick={() => signIn()}>Sign Up</button></Link>
+
+                <SignInButtons session={session} />
             </div>
         </nav>
     )
 }
+
+function SignInButtons({ linkStyles, buttonStyles, session }: { linkStyles?: React.CSSProperties, buttonStyles?: React.CSSProperties, session?: Session | null }) {
+
+    return (
+        <>
+            {session?.user ? (
+                <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+                    <Image alt="logo" src={session.user.image} width={40} height={40} style={{ objectFit: "cover" }} />
+                    <Link style={{ ...linkStyles }} href={""}><button style={{ ...buttonStyles }} onClick={() => signOut()}>Sign Out</button></Link>
+                </div>
+            ) : (
+                <>
+                    <Link style={{ ...linkStyles }} href={""}><button style={{ ...buttonStyles }} onClick={() => signIn()}>Login</button></Link>
+                    <Link style={{ ...linkStyles }} href={""}><button style={{ ...buttonStyles }} onClick={() => signIn()}>Sign Up</button></Link>
+                </>
+            )}
+        </>
+    )
+}
+

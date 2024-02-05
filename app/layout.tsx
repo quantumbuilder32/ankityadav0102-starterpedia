@@ -27,7 +27,7 @@ export default async function RootLayout({
       <body className={nunito.className}>
         <SessionProvider session={session}>
           <ResizeChecker />
-          <Navbar />
+          <Navbar session={session} />
           {children}
           <Footer />
         </SessionProvider>
