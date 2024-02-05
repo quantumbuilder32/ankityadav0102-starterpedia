@@ -8,17 +8,19 @@ import Logo from "../logo/Logo"
 import { signIn, signOut } from "next-auth/react"
 import type { Session } from "next-auth"
 import Image from "next/image";
+import Submit from "../submit/Submit"
 
-export default function Navbar({ session }: { session?: Session | null }) {
+export default function Navbar({ session }: { session: Session | null }) {
     const [showingNav, showingNavSet] = useState(false)
-    const [screenSize, screenSizeSet] = useAtom(screenSizeGlobal)
+    const [screenSize,] = useAtom(screenSizeGlobal)
 
     return (
         <nav className={styles.mainNav}>
             <Logo />
+
             {!screenSize.desktop && (
                 <>
-                    <Link href={""}><button>Submit ↪</button></Link>
+                    <Submit session={session} />
                 </>
             )}
 
@@ -43,7 +45,7 @@ export default function Navbar({ session }: { session?: Session | null }) {
             </ul>
 
             <div style={{ display: !screenSize.desktop ? "none" : "" }} className={styles.rightNavCont}>
-                <Link href={""}><button>Submit ↪</button></Link>
+                <Submit session={session} />
 
                 <SignInButtons session={session} />
             </div>

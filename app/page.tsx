@@ -1,8 +1,7 @@
 import ResourcesDisplay from "@/components/resourcesDisplay/ResourcesDisplay";
-import Image from "next/image";
 
 
-export default async function Home() {
+export default async function Page() {
 
   return (
     <main>
