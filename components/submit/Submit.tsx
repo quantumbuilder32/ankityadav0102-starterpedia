@@ -4,7 +4,7 @@ import { addResource } from '@/utility/serverFunctions/handleResources'
 import { Session } from 'next-auth'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { redirect } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
 
 const initialResourceObj: newResource = {
     name: "",
@@ -15,6 +15,7 @@ const initialResourceObj: newResource = {
 }
 
 export default function Submit({ session }: { session: Session | null }) {
+    const router = useRouter()
     const [wantsToSubmit, wantsToSubmitSet] = useState(false)
     const [resourceObj, resourceObjSet] = useState({ ...initialResourceObj })
 
@@ -34,7 +35,10 @@ export default function Submit({ session }: { session: Session | null }) {
     return (
         <>
             <button onClick={() => {
-                if (!session) redirect(`/api/auth/signin`)
+                if (!session) {
+                    console.log(`$redirecting`);
+                    router.push(`/api/auth/signin`)
+                }
 
                 wantsToSubmitSet(prev => !prev)
             }}>Submit ↪</button>

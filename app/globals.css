@@ -59,7 +59,7 @@ label {
 input {
   padding: 1rem;
   color: #000;
-  border: 2px solid #000;
+  border: 2px solid var(--tone95);
 }
 
 button {
