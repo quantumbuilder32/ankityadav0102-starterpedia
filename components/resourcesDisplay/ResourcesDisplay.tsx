@@ -1,5 +1,5 @@
 "use client"
-import Resource, { ResourceType } from "../resource/Resource"
+import ViewResource, { ResourceType } from "../resource/ViewResource"
 import styles from "./resource.module.css"
 
 const resources: ResourceType[] = [
@@ -51,7 +51,7 @@ export default function ResourcesDisplay() {
             <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", justifyContent: "center", gap: "1rem", maxWidth: "1000px", margin: "0 auto", padding: "1rem" }}>
                 {resources.map(eachResource => {
                     return (
-                        <Resource key={eachResource.id} resource={eachResource} />
+                        <ViewResource key={eachResource.id} resource={eachResource} />
                     )
                 })}
             </div>

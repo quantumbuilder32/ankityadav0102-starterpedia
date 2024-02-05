@@ -8,6 +8,7 @@ import SessionProvider from "@/components/session-provider";
 import { authOptions } from "@/lib/auth";
 import { getServerSession } from "next-auth";
 import { Toaster } from "react-hot-toast";
+import QueryWrapper from "@/components/QueryWrapper";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -27,11 +28,13 @@ export default async function RootLayout({
     <html lang="en">
       <body className={nunito.className}>
         <SessionProvider session={session}>
-          <Toaster position="top-center" reverseOrder={false} />
-          <ResizeChecker />
-          <Navbar session={session} />
-          {children}
-          <Footer />
+          <QueryWrapper>
+            <Toaster position="top-center" reverseOrder={false} />
+            <ResizeChecker />
+            <Navbar session={session} />
+            {children}
+            <Footer />
+          </QueryWrapper>
         </SessionProvider>
       </body>
     </html>

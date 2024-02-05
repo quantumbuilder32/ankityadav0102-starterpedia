@@ -14,7 +14,7 @@ export type ResourceType = {
 
 const todaysDate = new Date();
 
-export default function Resource({ resource }: { resource: ResourceType }) {
+export default function ViewResource({ resource }: { resource: ResourceType }) {
     const [dayDifferenceTime,] = useState(() => {
         const timeDifference = todaysDate.getTime() - resource.dateCreated.getTime()
         return timeDifference / (1000 * 3600 * 24)

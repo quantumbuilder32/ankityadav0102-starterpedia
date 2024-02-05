@@ -1,5 +1,5 @@
 import { z } from "zod";
-
+//changes to schema must be reflected here for zod, server functions must also be updates with any new fields 
 
 export const userSchema = z.object({
     id: z.string().min(1),
