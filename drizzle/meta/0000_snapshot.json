@@ -1,5 +1,5 @@
 {
-  "id": "ea919462-9786-4890-b06d-6642119f9ff3",
+  "id": "7841c94c-117b-4bcf-b49e-ca708c110b8b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "5",
   "dialect": "pg",
@@ -77,10 +77,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "account_userId_users_id_fk": {
-          "name": "account_userId_users_id_fk",
+        "account_userId_user_id_fk": {
+          "name": "account_userId_user_id_fk",
           "tableFrom": "account",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
@@ -169,10 +169,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "resources_userId_users_id_fk": {
-          "name": "resources_userId_users_id_fk",
+        "resources_userId_user_id_fk": {
+          "name": "resources_userId_user_id_fk",
           "tableFrom": "resources",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
@@ -355,10 +355,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "session_userId_users_id_fk": {
-          "name": "session_userId_users_id_fk",
+        "session_userId_user_id_fk": {
+          "name": "session_userId_user_id_fk",
           "tableFrom": "session",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],
@@ -388,8 +388,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "users": {
-      "name": "users",
+    "user": {
+      "name": "user",
       "schema": "",
       "columns": {
         "id": {
@@ -434,8 +434,8 @@
           "primaryKey": false,
           "notNull": false
         },
-        "password": {
-          "name": "password",
+        "role": {
+          "name": "role",
           "type": "text",
           "primaryKey": false,
           "notNull": false
@@ -455,13 +455,20 @@
             "user_name"
           ],
           "isUnique": false
+        },
+        "user_id_index": {
+          "name": "user_id_index",
+          "columns": [
+            "id"
+          ],
+          "isUnique": false
         }
       },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "users_user_name_unique": {
-          "name": "users_user_name_unique",
+        "user_user_name_unique": {
+          "name": "user_user_name_unique",
           "nullsNotDistinct": false,
           "columns": [
             "user_name"
@@ -488,10 +495,10 @@
       },
       "indexes": {},
       "foreignKeys": {
-        "users_to_bookmarks_userId_users_id_fk": {
-          "name": "users_to_bookmarks_userId_users_id_fk",
+        "users_to_bookmarks_userId_user_id_fk": {
+          "name": "users_to_bookmarks_userId_user_id_fk",
           "tableFrom": "users_to_bookmarks",
-          "tableTo": "users",
+          "tableTo": "user",
           "columnsFrom": [
             "userId"
           ],

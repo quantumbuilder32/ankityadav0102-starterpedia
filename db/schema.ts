@@ -4,22 +4,21 @@ import type { AdapterAccount } from '@auth/core/adapters'
 
 
 
-
 export const users = pgTable("user", {
     id: text("id").notNull().primaryKey(),
     name: text("name"),
     email: text("email").notNull(),
     emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
-
-    // userName: text("user_name").notNull().unique(),
-    // bio: text("bio"),
-    // role: text("password"),
-    // createdAt: timestamp("created_at").defaultNow().notNull(),
+    userName: text("user_name").notNull().unique(),
+    bio: text("bio"),
+    role: text("role"),
+    createdAt: timestamp("created_at").defaultNow().notNull(),
 },
     (table) => {
         return {
-            // usernameIndex: index("username_index").on(table.userName),
+            usernameIndex: index("username_index").on(table.userName),
+            userIdIndex: index("user_id_index").on(table.id),
         };
     })
 

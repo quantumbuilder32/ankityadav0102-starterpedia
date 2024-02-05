@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS "tags" (
 	"name" text PRIMARY KEY NOT NULL
 );
 --> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "users" (
+CREATE TABLE IF NOT EXISTS "user" (
 	"id" text PRIMARY KEY NOT NULL,
 	"name" text,
 	"email" text NOT NULL,
@@ -57,9 +57,9 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"image" text,
 	"user_name" text NOT NULL,
 	"bio" text,
-	"password" text,
+	"role" text,
 	"created_at" timestamp DEFAULT now() NOT NULL,
-	CONSTRAINT "users_user_name_unique" UNIQUE("user_name")
+	CONSTRAINT "user_user_name_unique" UNIQUE("user_name")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "users_to_bookmarks" (
@@ -79,15 +79,16 @@ CREATE INDEX IF NOT EXISTS "resource_index_two" ON "resources_to_categories" ("r
 CREATE INDEX IF NOT EXISTS "category_index" ON "resources_to_categories" ("category_name");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "resource_index" ON "resources_to_tags" ("resource_id");--> statement-breakpoint
 CREATE INDEX IF NOT EXISTS "tag_index" ON "resources_to_tags" ("tag_name");--> statement-breakpoint
-CREATE INDEX IF NOT EXISTS "username_index" ON "users" ("user_name");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "username_index" ON "user" ("user_name");--> statement-breakpoint
+CREATE INDEX IF NOT EXISTS "user_id_index" ON "user" ("id");--> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "account" ADD CONSTRAINT "account_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "account" ADD CONSTRAINT "account_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "resources" ADD CONSTRAINT "resources_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "resources" ADD CONSTRAINT "resources_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
@@ -117,13 +118,13 @@ EXCEPTION
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "session" ADD CONSTRAINT "session_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "session" ADD CONSTRAINT "session_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
 --> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "users_to_bookmarks" ADD CONSTRAINT "users_to_bookmarks_userId_users_id_fk" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE cascade ON UPDATE no action;
+ ALTER TABLE "users_to_bookmarks" ADD CONSTRAINT "users_to_bookmarks_userId_user_id_fk" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
