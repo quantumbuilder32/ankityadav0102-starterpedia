@@ -15,7 +15,7 @@ export default async function CategoriesDisplay({ categories, searchParams }: { 
                     if (!searchParams.category && eachCategory.name === "all") currentlySelected = true
 
                     return (
-                        <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ backgroundColor: currentlySelected ? "var(--mainColor)" : "" }} showingAmountOfResources={eachCategory.amountOfResources === Infinity ? false : true} />
+                        <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ backgroundColor: currentlySelected ? "var(--mainColor)" : "", color: currentlySelected ? "#fff" : "" }} showingAmountOfResources={eachCategory.amountOfResources === Infinity ? false : true} />
                     )
                 })}
             </div>
