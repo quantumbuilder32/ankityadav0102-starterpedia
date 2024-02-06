@@ -115,9 +115,11 @@ export default function ViewResource({ resource, fullScreenMode = false }: { res
                                 ogpResultData?.ogDescription ?? ""
                             }</p>
 
-                            <button className='secondaryButton' style={{ justifySelf: "center" }}>
-                                <Link style={{}} href={resource.link}>Visit Link</Link>
-                            </button>
+                            <Link style={{ justifySelf: "center" }} href={resource.link} target='blank_'>
+                                <button className='secondaryButton' >
+                                    Visit Link
+                                </button>
+                            </Link>
                         </>
                     )}
 
