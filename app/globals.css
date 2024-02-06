@@ -9,8 +9,8 @@
 }
 
 :root {
-  --mainColor: blue;
-  --secondaryColor: purple;
+  --mainColor: #617187;
+  --secondaryColor: rgb(78, 3, 78);
   --tone20: hsl(0, 0%, 20%);
   --tone95: hsl(0, 0%, 95%);
   --tone80: hsl(0, 0%, 80%);
@@ -66,6 +66,17 @@ button {
 
 button:hover {
   border: 1px solid var(--tone80);
+}
+
+.secondaryButton {
+  background-color: var(--tone20);
+  color: #fff;
+  padding: 1rem 4rem;
+  transition: background-color 400ms;
+}
+
+.secondaryButton:hover {
+  background-color: #000;
 }
 
 svg {
