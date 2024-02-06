@@ -3,7 +3,7 @@ import { category, resource } from '@/types';
 import { getAllResourceCategories } from '@/utility/serverFunctions/handleCategories';
 import { QueryClient, useQuery, useQueryClient } from '@tanstack/react-query';
 import Image from 'next/image'
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import CategoryDisplay from '../categories/CategoryDisplay';
 import { bookmarkResource, checkIfResourceIsBookmarked, removeResourceBookmark } from '@/utility/serverFunctions/handleUsersToBookmarks';
 import { useSession } from 'next-auth/react';
@@ -11,10 +11,12 @@ import { authOptions } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { toast } from 'react-hot-toast';
 import { getAmountOfResourceBookmarks } from '@/utility/serverFunctions/handleResources';
+import { loadOgp } from '@/utility/serverFunctions/handleOgpLoad';
 
 export default function ViewResource({ resource, fullScreen = false }: { resource: resource, fullScreen?: boolean }) {
     const queryClient = useQueryClient()
     const { data: session } = useSession()
+    const [resourceImage, resourceImageSet] = useState("")
 
     const [dayDifferenceTime,] = useState(() => {
         const todaysDate = new Date();
@@ -45,6 +47,7 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
     })
 
 
+
     const handleBookmarkResource = async () => {
         if (!session) return redirect("/api/auth/signin")
         if (userBookmarkedResourceData === undefined) return
@@ -71,6 +74,23 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
         }
     }
 
+
+    useEffect(() => {
+        const run = async () => {
+            try {
+                const result = await loadOgp(resource.link);
+
+                if (result.ogImage && result.ogImage[0].url) {
+                    resourceImageSet(result.ogImage[0].url)
+                }
+
+            } catch (error) {
+                console.log(`$error loading ogp`, error);
+            }
+        }
+        run()
+    }, [])
+
     return (
         <div style={{ position: "relative", backgroundColor: "rgba(0,0,0,0.05)", borderRadius: "2rem" }}>
             {dayDifferenceTime <= 1 && (
@@ -78,7 +98,7 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
             )}
 
             <div style={{ width: "100%", aspectRatio: '1/1', display: "grid", alignItems: "center", justifyItems: "center" }}>
-                {/* <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", maxWidth: "50%", height: "auto", borderRadius: "2rem", boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)" }} /> */}
+                <Image alt={`${resource.name}'s image`} src={resourceImage ? resourceImage : "https://images.pexels.com/photos/158302/dahlia-flower-plant-nature-158302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} width={100} height={100} style={{ objectFit: "cover", maxWidth: "50%", height: "auto", aspectRatio: "1/1", borderRadius: "2rem", boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)" }} />
             </div>
 
             <div style={{ padding: "1.5rem", display: "grid" }}>
@@ -93,7 +113,7 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
                 <div style={{ display: "flex", gap: ".5rem", fontSize: "var(--smallFontSize)", overflow: "auto" }}>
                     {resourceCategoriesData?.map(eachCategory => {
                         return (
-                            <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ filter: "brightness(.8)", transformOrigin: "center left", borderRadius: ".7rem" }} />
+                            <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ filter: "brightness(.8)", transformOrigin: "center left", borderRadius: ".7rem" }} showingAmountOfResources={false} pluralMode={false} />
                         )
                     })}
                 </div>
