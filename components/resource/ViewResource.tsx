@@ -81,23 +81,21 @@ export default function ViewResource({ resource, fullScreen = false }: { resourc
                 {/* <Image alt={`${resource.title}'s image`} src={resource.imageSrc} width={500} height={500} style={{ objectFit: "cover", maxWidth: "50%", height: "auto", borderRadius: "2rem", boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)" }} /> */}
             </div>
 
-            <div style={{ padding: "1.5rem" }}>
+            <div style={{ padding: "1.5rem", display: "grid" }}>
+                <div style={{ justifySelf: "flex-end", display: "flex", gap: ".5rem", alignItems: 'center', color: userBookmarkedResourceData ? "var(--secondaryColor)" : "" }} onClick={handleBookmarkResource}>
+                    {amtOfResourceBookmarksData > 0 && <p>{amtOfResourceBookmarksData}</p>}
+
+                    <svg style={{ fill: userBookmarkedResourceData ? "var(--secondaryColor)" : "" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" /></svg>
+                </div>
+
                 <p>{resource.name}</p>
 
-                <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignContent: "flex-start" }}>
-                    <div style={{ display: "flex", gap: ".5rem", fontSize: "var(--smallFontSize)", }}>
-                        {resourceCategoriesData?.map(eachCategory => {
-                            return (
-                                <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ filter: "brightness(.8)", transformOrigin: "center left", borderRadius: ".7rem" }} />
-                            )
-                        })}
-                    </div>
-
-                    <div style={{ display: "flex", gap: ".5rem", alignItems: 'center', color: userBookmarkedResourceData ? "var(--secondaryColor)" : "" }} onClick={handleBookmarkResource}>
-                        {amtOfResourceBookmarksData > 0 && <p>{amtOfResourceBookmarksData}</p>}
-
-                        <svg style={{ fill: userBookmarkedResourceData ? "var(--secondaryColor)" : "" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M0 48V487.7C0 501.1 10.9 512 24.3 512c5 0 9.9-1.5 14-4.4L192 400 345.7 507.6c4.1 2.9 9 4.4 14 4.4c13.4 0 24.3-10.9 24.3-24.3V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48z" /></svg>
-                    </div>
+                <div style={{ display: "flex", gap: ".5rem", fontSize: "var(--smallFontSize)", overflow: "auto" }}>
+                    {resourceCategoriesData?.map(eachCategory => {
+                        return (
+                            <CategoryDisplay key={eachCategory.name} seenCategory={eachCategory} ElStyle={{ filter: "brightness(.8)", transformOrigin: "center left", borderRadius: ".7rem" }} />
+                        )
+                    })}
                 </div>
             </div>
         </div>

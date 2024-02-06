@@ -21,14 +21,6 @@
   --extraLargeFontSize: 2.5rem;
 }
 
-@media only screen and (max-width: 600px) {
-  :root {
-    --smallFontSize: .7rem;
-    --largeFontSize: 1.5rem;
-    --extraLargeFontSize: 2rem;
-  }
-}
-
 html {
   min-height: 100%;
   display: grid;
@@ -86,6 +78,10 @@ svg:hover {
   scale: 1.1;
 }
 
+.resizePadding {
+  padding: 1rem;
+}
+
 .noScrollBar::-webkit-scrollbar {
   display: none;
 }
@@ -104,4 +100,28 @@ svg:hover {
 
 *::-webkit-scrollbar-thumb:hover {
   background: #555;
+}
+
+
+@media only screen and (max-width: 600px) {
+  :root {
+    --smallFontSize: .7rem;
+    --largeFontSize: 1.5rem;
+    --extraLargeFontSize: 2rem;
+  }
+}
+
+
+
+
+@media only screen and (max-width: 400px) {
+
+  /* really small screens */
+  section {
+    padding: 2rem 0rem;
+  }
+
+  .resizePadding {
+    padding: 1rem .5rem;
+  }
 }
