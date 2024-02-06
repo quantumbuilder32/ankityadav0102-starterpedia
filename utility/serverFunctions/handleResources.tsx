@@ -3,7 +3,7 @@
 import { db } from "@/db/db";
 import { categories, resources } from "@/db/schema";
 import { authOptions } from "@/lib/auth"
-import { newResource, resource, resourceSchema } from "@/types"
+import { newResource, newResourceSchema, resource, resourceSchema } from "@/types"
 import { eq, ilike } from "drizzle-orm";
 import { getServerSession } from "next-auth"
 
@@ -16,7 +16,8 @@ export async function addResource(seenResource: newResource) {
         userId: session.user.id,
     }
 
-    resourceSchema.omit({ id: true, createdAt: true }).parse(finalResource)
+    newResourceSchema.parse(finalResource)
+
     await db.insert(resources).values(finalResource);
 }
 
@@ -29,6 +30,18 @@ export async function getAllApprovedResources(seenLimit = 50, seenOffset = 0): P
 
     return results
 }
+
+export async function getAmountOfResourceBookmarks(resourceIdObj: Pick<resource, "id">): Promise<number> {
+    resourceSchema.pick({ id: true }).parse(resourceIdObj)
+
+    const results = await db.query.resources.findFirst({
+        where: eq(resources.id, resourceIdObj.id),
+    });
+
+    return results ? results.amountOfUserBookmarks : 0
+}
+
+
 
 
 export async function getAllUnapprovedResources(seenLimit = 50, seenOffset = 0): Promise<resource[]> {

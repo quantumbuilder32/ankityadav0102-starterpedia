@@ -95,9 +95,11 @@ export const resources = pgTable("resources",
         description: text("description"),
         createdAt: timestamp("created_at").defaultNow().notNull(),
         approved: boolean("approved").default(false).notNull(),
+        amountOfUserBookmarks: integer("amount_of_user_bookmarks").notNull().default(0),
     },
     (table) => {
         return {
+            amountOfUserBookmarksIndex: index("amount_of_user_bookmarks_index").on(table.amountOfUserBookmarks),
         };
     }
 );

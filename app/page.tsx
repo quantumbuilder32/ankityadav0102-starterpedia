@@ -1,10 +1,47 @@
 import CategoriesDisplay from "@/components/categories/CategoriesDisplay";
 import ResourcesDisplay from "@/components/resourcesDisplay/ResourcesDisplay";
+import { categories } from "@/db/schema";
+import { category, resource } from "@/types";
+import { getAllCategories } from "@/utility/serverFunctions/handleCategories";
 import { getAllApprovedResources } from "@/utility/serverFunctions/handleResources";
+import { getResourcesFromCategory } from "@/utility/serverFunctions/handleResourcesToCategories";
+const customCategories: category[] = [
+  {
+    amountOfResources: Infinity,
+    name: "all",
+  },
+  {
+    amountOfResources: Infinity,
+    name: "top Picks",
+  }
+]
 
-export default async function Page() {
+export default async function Page({ searchParams }: { searchParams: { category: string, limit: string, offset: string } }) {
+  const categories = [...customCategories, ...await getAllCategories()]
+  const foundActiveCategory = categories.find(eachCategory => eachCategory.name === searchParams.category)
 
-  const resources = await getAllApprovedResources()
+  const seenLimit = searchParams.limit ? parseInt(searchParams.limit) : 50
+  const seenOffset = searchParams.offset ? parseInt(searchParams.offset) : 0
+
+  let resources: resource[] = []
+  if (foundActiveCategory) {
+    if (foundActiveCategory.name === "all") {
+      return await getAllApprovedResources(seenLimit, seenOffset)
+    } else if (foundActiveCategory.name === "top picks") {
+      return //most bookmarked resources
+    }
+
+
+    resources = await getResourcesFromCategory(foundActiveCategory.name, true, seenLimit, seenOffset)
+  } else {
+    //if no param found default
+    resources = await getAllApprovedResources(seenLimit, seenOffset)
+  }
+
+  console.log(`$seenparams`, searchParams);
+  console.log(`$seenlimit`, seenLimit);
+  console.log(`$seenOffset`, seenOffset);
+  console.log(`$foundActiveCategory`, foundActiveCategory);
 
   return (
     <main>
@@ -33,7 +70,7 @@ export default async function Page() {
       </section>
 
       <section>
-        <CategoriesDisplay />
+        <CategoriesDisplay categories={categories} searchParams={searchParams} />
 
         <ResourcesDisplay resources={resources} />
       </section>

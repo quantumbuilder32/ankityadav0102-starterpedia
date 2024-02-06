@@ -24,7 +24,7 @@ export type newUser = Omit<user, "id" | "createdAt">
 
 
 
-
+//i like this
 export const resourceSchema = z.object({
     id: z.number(),
     userId: z.string().min(1),
@@ -33,7 +33,10 @@ export const resourceSchema = z.object({
     description: z.string().min(1).nullable(),
     createdAt: z.date(),
     approved: z.boolean(),
+    amountOfUserBookmarks: z.number(),
 })
+export const newResourceSchema = resourceSchema.omit({ id: true, createdAt: true, amountOfUserBookmarks: true })
+
 
 export type resource = z.infer<typeof resourceSchema> & {
     author?: user,
@@ -41,9 +44,7 @@ export type resource = z.infer<typeof resourceSchema> & {
     categories?: category[],
     usersThatBookmarked?: user[],
 }
-export type newResource = Omit<resource, "id" | "createdAt">
-
-
+export type newResource = z.infer<typeof newResourceSchema>
 
 
 

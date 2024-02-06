@@ -47,3 +47,16 @@ export async function removeResourceFromCategory(resourceIdObj: Pick<resource, "
         })
         .where(eq(categories.name, categoryNameObj.name));
 }
+
+export async function getResourcesFromCategory(categoryName: string, onlyGetApproved = true, seenLimit = 50, seenOffset = 0): Promise<resource[]> {
+    const results = await db.query.resourcesToCategories.findMany({
+        limit: seenLimit,
+        offset: seenOffset,
+        where: eq(resourcesToCategories.categoryName, categoryName),
+        with: {
+            resource: true
+        }
+    });
+
+    return results.map(eachPair => eachPair.resource).filter(eachResource => onlyGetApproved ? eachResource.approved : true)
+}
