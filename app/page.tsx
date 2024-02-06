@@ -3,7 +3,7 @@ import ResourcesDisplay from "@/components/resourcesDisplay/ResourcesDisplay";
 import { categories } from "@/db/schema";
 import { category, resource } from "@/types";
 import { getAllCategories } from "@/utility/serverFunctions/handleCategories";
-import { getAllApprovedResources } from "@/utility/serverFunctions/handleResources";
+import { getAllApprovedResources, getTopBookmarkedResources } from "@/utility/serverFunctions/handleResources";
 import { getResourcesFromCategory } from "@/utility/serverFunctions/handleResourcesToCategories";
 const customCategories: category[] = [
   {
@@ -12,7 +12,7 @@ const customCategories: category[] = [
   },
   {
     amountOfResources: Infinity,
-    name: "top Picks",
+    name: "top picks",
   }
 ]
 
@@ -26,22 +26,18 @@ export default async function Page({ searchParams }: { searchParams: { category:
   let resources: resource[] = []
   if (foundActiveCategory) {
     if (foundActiveCategory.name === "all") {
-      return await getAllApprovedResources(seenLimit, seenOffset)
+      resources = await getAllApprovedResources(seenLimit, seenOffset)
     } else if (foundActiveCategory.name === "top picks") {
-      return //most bookmarked resources
+      resources = await getTopBookmarkedResources(seenLimit, seenOffset)
+    } else {
+      resources = await getResourcesFromCategory(foundActiveCategory.name, true, seenLimit, seenOffset)
     }
 
-
-    resources = await getResourcesFromCategory(foundActiveCategory.name, true, seenLimit, seenOffset)
   } else {
     //if no param found default
     resources = await getAllApprovedResources(seenLimit, seenOffset)
   }
 
-  console.log(`$seenparams`, searchParams);
-  console.log(`$seenlimit`, seenLimit);
-  console.log(`$seenOffset`, seenOffset);
-  console.log(`$foundActiveCategory`, foundActiveCategory);
 
   return (
     <main>

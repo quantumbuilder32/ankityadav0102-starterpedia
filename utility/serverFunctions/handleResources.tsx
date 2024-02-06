@@ -4,7 +4,7 @@ import { db } from "@/db/db";
 import { categories, resources } from "@/db/schema";
 import { authOptions } from "@/lib/auth"
 import { newResource, newResourceSchema, resource, resourceSchema } from "@/types"
-import { eq, ilike } from "drizzle-orm";
+import { eq, ilike, desc } from "drizzle-orm";
 import { getServerSession } from "next-auth"
 
 export async function addResource(seenResource: newResource) {
@@ -26,6 +26,17 @@ export async function getAllApprovedResources(seenLimit = 50, seenOffset = 0): P
         limit: seenLimit,
         offset: seenOffset,
         where: eq(resources.approved, true),
+    });
+
+    return results
+}
+
+export async function getTopBookmarkedResources(seenLimit = 50, seenOffset = 0): Promise<resource[]> {
+    const results = await db.query.resources.findMany({
+        limit: seenLimit,
+        offset: seenOffset,
+        where: eq(resources.approved, true),
+        orderBy: [desc(resources.amountOfUserBookmarks)],
     });
 
     return results
