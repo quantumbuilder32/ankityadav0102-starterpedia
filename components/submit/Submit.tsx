@@ -4,7 +4,7 @@ import { addResource } from '@/utility/serverFunctions/handleResources'
 import { Session } from 'next-auth'
 import React, { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 const initialResourceObj: newResource = {
     name: "",

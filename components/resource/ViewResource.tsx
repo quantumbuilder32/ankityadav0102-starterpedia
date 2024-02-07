@@ -13,11 +13,11 @@ import { toast } from 'react-hot-toast';
 import { getAmountOfResourceBookmarks } from '@/utility/serverFunctions/handleResources';
 import { loadOgp } from '@/utility/serverFunctions/handleOgpLoad';
 import Link from 'next/link';
+import Tag from '../tag/Tag';
 
 export default function ViewResource({ resource, fullScreenMode = false }: { resource: resource, fullScreenMode?: boolean }) {
     const queryClient = useQueryClient()
     const { data: session } = useSession()
-    const [resourceImage, resourceImageSet] = useState("")
     const [fullScreen, fullScreenSet] = useState(fullScreenMode)
 
     const [dayDifferenceTime,] = useState(() => {
@@ -81,6 +81,15 @@ export default function ViewResource({ resource, fullScreenMode = false }: { res
         }
     }
 
+    const addHttpsIfNeeded = (link: string) => {
+        // Check if the link contains 'https'
+        if (!link.includes('https://')) {
+            // If it doesn't contain 'https', add it to the beginning
+            link = 'https://' + link;
+        }
+        return link;
+    }
+
     const fullScreenStyle: React.CSSProperties = { backgroundColor: "#fff", position: "fixed", top: "50%", left: "50%", width: "min(600px, 80%)", translate: "-50% -50%", maxHeight: "95vh", overflowY: "auto", zIndex: 11 }
     const normalScreenStyle: React.CSSProperties = { backgroundColor: "rgba(0,0,0,0.05)", position: "relative", cursor: "pointer" }
 
@@ -89,9 +98,18 @@ export default function ViewResource({ resource, fullScreenMode = false }: { res
             <div style={{ display: "grid", alignContent: "flex-start", borderRadius: "2rem", ...(fullScreen ? fullScreenStyle : normalScreenStyle) }} onClick={() => {
                 fullScreenSet(true)
             }}>
-                {dayDifferenceTime <= 1 && (
-                    <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", position: "absolute", top: 0, right: 0, borderRadius: "2rem", color: "#fff", margin: "1rem" }}>new</div>
-                )}
+                <div style={{ position: "absolute", top: 0, right: 0, margin: "1rem", overflow: "auto", display: "flex", gap: ".5rem" }}>
+                    {resource.resourcesToTags?.map(eachResourceToTag => {
+                        return (
+                            <Tag key={eachResourceToTag.tagName} text={eachResourceToTag.tagName} highlight={true} />
+                        )
+                    })}
+
+                    {dayDifferenceTime <= 1 && (
+                        <div style={{ padding: ".5rem 1rem", backgroundColor: "var(--mainColor)", borderRadius: "2rem", color: "#fff" }}>new</div>
+                    )}
+                </div>
+
 
                 <div style={{ width: fullScreen ? "80%" : "100%", aspectRatio: '1/1', display: "grid", alignItems: "center", justifyItems: "center", backgroundColor: fullScreen ? "rgba(0,0,0,0.05)" : "", justifySelf: "center", borderRadius: fullScreen ? "2rem" : "", margin: fullScreen ? "5rem" : "" }}>
                     <Image alt={`${resource.name}'s image`} src={ogpResultData?.ogImage?.[0].url ?? "https://images.pexels.com/photos/158302/dahlia-flower-plant-nature-158302.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"} width={100} height={100} style={{ objectFit: "cover", maxWidth: "50%", height: "auto", aspectRatio: "1/1", borderRadius: "2rem", boxShadow: "0 0 5px 5px rgba(0,0,0,0.05)" }} />
@@ -115,7 +133,7 @@ export default function ViewResource({ resource, fullScreenMode = false }: { res
                                 ogpResultData?.ogDescription ?? ""
                             }</p>
 
-                            <Link style={{ justifySelf: "center" }} href={resource.link} target='blank_'>
+                            <Link style={{ justifySelf: "center" }} href={addHttpsIfNeeded(resource.link)} target='blank_'>
                                 <button className='secondaryButton' >
                                     Visit Link
                                 </button>

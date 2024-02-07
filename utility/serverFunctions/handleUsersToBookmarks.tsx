@@ -3,7 +3,7 @@
 import { db } from "@/db/db";
 import { resources, usersToBookmarks } from "@/db/schema";
 import { authOptions } from "@/lib/auth"
-import { resource, resourceSchema, user, userSchema } from "@/types"
+import { resource, resourceSchema, user, userSchema, usersToBookmarksType } from "@/types"
 import { eq, sql, and } from "drizzle-orm";
 import { getServerSession } from "next-auth"
 
@@ -64,4 +64,22 @@ export async function checkIfResourceIsBookmarked(userIdObj: Pick<user, "id">, r
     })
 
     return result ? true : false
+}
+
+export async function getUserBookmarks(userIdObj: Pick<user, "id">, limit = 50, offset = 0): Promise<usersToBookmarksType[]> {
+    const session = await getServerSession(authOptions)
+    if (!session) throw new Error("not signed in")
+
+    userSchema.pick({ id: true }).parse(userIdObj)
+
+    const results = await db.query.usersToBookmarks.findMany({
+        where: eq(usersToBookmarks.userId, userIdObj.id),
+        limit: limit,
+        offset: offset,
+        with: {
+            resource: true
+        }
+    })
+
+    return results
 }

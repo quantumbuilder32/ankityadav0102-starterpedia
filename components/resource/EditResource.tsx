@@ -8,6 +8,9 @@ import React, { useRef, useState } from 'react'
 import { toast } from 'react-hot-toast'
 import CategoryDisplay from '../categories/CategoryDisplay'
 import { addResourceToCategory, removeResourceFromCategory } from '@/utility/serverFunctions/handleResourcesToCategories'
+import { getAllResourceTags, getAllTags } from '@/utility/serverFunctions/handleTags'
+import { addResourceToTag, removeResourceFromTag } from '@/utility/serverFunctions/handleResourcesToTags'
+import Tag from '../tag/Tag'
 
 export default function EditResource({ resource }: { resource: resource }) {
     const queryClient = useQueryClient()
@@ -15,6 +18,7 @@ export default function EditResource({ resource }: { resource: resource }) {
     const [resourceObj, resourceObjSet] = useState({ ...resource })
 
     const [addingCategory, addingCategorySet] = useState(false)
+    const [addingATag, addingATagSet] = useState(false)
 
     const handleUpdate = async (passedResourceObj?: resource) => {
         const usingResourceObj = passedResourceObj ? passedResourceObj : resourceObj
@@ -48,6 +52,24 @@ export default function EditResource({ resource }: { resource: resource }) {
         }
     }
 
+    const handleAddTag = async (tagName: string, alreadyAdded: boolean) => {
+
+        try {
+            if (alreadyAdded) {
+                await removeResourceFromTag({ id: resourceObj.id }, { name: tagName })
+
+            } else {
+                await addResourceToTag({ id: resourceObj.id }, { name: tagName })
+            }
+
+            toast.success("updated tag!")
+            queryClient.invalidateQueries({ queryKey: ['tags', resourceObj.id] })
+
+        } catch (error) {
+            toast.error("tag add error")
+            console.log(`$error`, error);
+        }
+    }
 
     const { data: categoriesData } = useQuery({
         queryKey: ['categories'],
@@ -62,6 +84,21 @@ export default function EditResource({ resource }: { resource: resource }) {
         refetchOnWindowFocus: false,
         enabled: addingCategory
     })
+
+    const { data: tagsData } = useQuery({
+        queryKey: ['tags'],
+        queryFn: async () => await getAllTags(),
+        refetchOnWindowFocus: false,
+        enabled: addingATag
+    })
+
+    const { data: resourceTagData, isLoading: resourceTagsIsLoading } = useQuery({
+        queryKey: ['tags', resourceObj.id],
+        queryFn: async () => await getAllResourceTags({ id: resourceObj.id }),
+        refetchOnWindowFocus: false,
+        enabled: addingATag
+    })
+
 
     return (
         <div style={{ display: "grid", alignContent: "flex-start", gap: "1rem", border: "3px solid var(--tone95)", padding: "1rem", borderRadius: "1rem" }}>
@@ -92,7 +129,28 @@ export default function EditResource({ resource }: { resource: resource }) {
                     </div>
                 )}
 
+                {addingATag && tagsData && resourceTagData && (
+                    <div style={{ position: "absolute", top: 0, left: 0, padding: "1rem", backgroundColor: "#fff", width: "100%", display: "flex", flexDirection: "column", maxHeight: "70vh", overflowY: "auto" }}>
+                        <div style={{ marginLeft: "auto" }} onClick={() => { addingATagSet(false) }}>
+                            <svg style={{ width: "1.5rem" }} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><path d="M342.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 210.7 86.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L146.7 256 41.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L192 301.3 297.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L237.3 256 342.6 150.6z" /></svg>
+                        </div>
+
+                        <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem", }}>
+                            {tagsData.map(eachTag => {
+                                const selectedTag = resourceTagData.find(eachPair => eachPair.tagName === eachTag.name)
+
+                                return (
+                                    <div key={eachTag.name} onClick={() => handleAddTag(eachTag.name, selectedTag ? true : false)}>
+                                        <Tag text={eachTag.name} highlight={selectedTag ? true : false} />
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+                )}
+
                 <button style={{ margin: "0 auto" }} onClick={() => addingCategorySet(prev => !prev)}>{addingCategory ? "Close" : "Add Category"}</button>
+                <button style={{ margin: "0 auto" }} onClick={() => addingATagSet(prev => !prev)}>{addingATag ? "Close" : "Add Tag"}</button>
             </div>
 
             <div style={{ display: "grid", gap: "1rem" }}>

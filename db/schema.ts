@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { boolean, index, pgTable, primaryKey, integer, serial, text, timestamp, } from "drizzle-orm/pg-core";
+import { boolean, index, pgTable, primaryKey, integer, serial, text, timestamp, varchar, } from "drizzle-orm/pg-core";
 import type { AdapterAccount } from '@auth/core/adapters'
 
 
@@ -11,6 +11,7 @@ export const users = pgTable("user", {
     emailVerified: timestamp("emailVerified", { mode: "date" }),
     image: text("image"),
     userName: text("user_name").notNull().unique(),
+    amtOfResourcesPosted: integer("amount_of_resources_posted").notNull().default(0),
     bio: text("bio"),
     role: text("role"),
     createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -25,7 +26,7 @@ export const users = pgTable("user", {
 
 export const usersRelations = relations(users, ({ many }) => ({
     resourcesPosted: many(resources),
-    bookmarks: many(usersToBookmarks),
+    usersToBookmarks: many(usersToBookmarks),
 }));
 
 
@@ -110,7 +111,7 @@ export const resourcesRelations = relations(resources, ({ one, many }) => ({
         fields: [resources.userId],
         references: [users.id],
     }),
-    tags: many(resourcesToTags),
+    resourcesToTags: many(resourcesToTags),
     categories: many(resourcesToCategories),
     usersThatBookmarked: many(usersToBookmarks),
 }));

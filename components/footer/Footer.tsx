@@ -1,6 +1,7 @@
 import React from 'react'
 import Logo from '../logo/Logo'
 import styles from "./footer.module.css"
+import Link from 'next/link'
 
 export default function Footer() {
     return (
@@ -23,22 +24,22 @@ export default function Footer() {
                 <div style={{ flex: 1 }}>
                     <ul className={styles.mainMenu}>
                         <p>Links</p>
-                        <li>Privacy Policy</li>
-                        <li>Contact</li>
-                        <li>About</li>
-                        <li>Terms and Conditions</li>
-                        <li>Our Resources</li>
+                        <li><Link href={``}>Privacy Policy</Link></li>
+                        <li><Link href={``}>Contact</Link></li>
+                        <li><Link href={``}>About</Link></li>
+                        <li><Link href={``}>Terms and Conditions</Link></li>
+                        <li><Link href={``}>Our Resources</Link></li>
                     </ul>
                 </div>
 
                 <div style={{ flex: 1 }}>
                     <ul className={styles.mainMenu}>
                         <p>Follow Us</p>
-                        <li>Twitter</li>
-                        <li>Youtube</li>
-                        <li>Telegram</li>
-                        <li>Reddit</li>
-                        <li>Github</li>
+                        <li><Link href={``}>Twitter</Link></li>
+                        <li><Link href={``}>Youtube</Link></li>
+                        <li><Link href={``}>Telegram</Link></li>
+                        <li><Link href={``}>Reddit</Link></li>
+                        <li><Link href={``}>Github</Link></li>
                     </ul>
                 </div>
             </div>

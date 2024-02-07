@@ -32,10 +32,10 @@ export default function Navbar({ session }: { session: Session | null }) {
 
 
             <ul style={{ display: !screenSize.desktop && !showingNav ? "none" : "" }} className={styles.mainMenu}>
-                <li><Link href={""}>Leaderboard</Link></li>
-                <li><Link href={""}>Bookmarks</Link></li>
-                <li><Link href={""}>Advertise</Link></li>
-                <li><Link href={""}>About</Link></li>
+                <li><Link href={"/leaderboard"}>Leaderboard</Link></li>
+                <li><Link href={"/bookmarks"}>Bookmarks</Link></li>
+                <li><Link href={"/advertise"}>Advertise</Link></li>
+                <li><Link href={"/about"}>About</Link></li>
 
                 {showingNav && (
                     <>
@@ -59,7 +59,10 @@ function SignInButtons({ linkStyles, buttonStyles, session }: { linkStyles?: Rea
         <>
             {session?.user ? (
                 <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-                    <Image alt="logo" src={session.user.image} width={40} height={40} style={{ objectFit: "cover" }} />
+                    {session.user.image && (
+                        <Image alt="logo" src={session.user.image} width={40} height={40} style={{ objectFit: "cover" }} />
+                    )}
+
                     <Link style={{ ...linkStyles }} href={""}><button style={{ ...buttonStyles }} onClick={() => signOut()}>Sign Out</button></Link>
                 </div>
             ) : (
